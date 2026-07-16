@@ -55,6 +55,120 @@
   <!-- Clicking this button runs the animation again, refer by restartButton -->
   <button id="restartButton">Restart Animation</button>
 
+  <script>
+    // Stores the current interval so it can be stopped before a new one begins.
+    let activeInterval;
+
+    // This function starts and controls the entire loading animation.
+    function runLoadingAnimation() {
+      // getElementById() finds the HTML element whose ID is "loader".
+      const loader = document.getElementById("loader");
+
+      // finds the HTML element whose ID is "status".
+      const status = document.getElementById("status");
+
+      // This variable stores the new progress display element.
+      const progress = document.getElementById("progress");
+
+      // Animation frames
+      const frames = ["⏳", "⌛", ".", "..", "..."];
+
+      // These colors will be applied to the animation progresses.
+      const backgroundColors = [
+        "#f4f4f4",
+        "#e8f4ff",
+        "#fff3cd",
+        "#e7f7e7",
+        "#f3e8ff"
+      ];
+
+      // index tracks which animation frame should appear next.
+      let index = 0;
+
+      // cycleCount tracks how many complete trips 
+      let cycleCount = 0;
+
+      // The animation will stop after five complete cycles.
+      const maxCycles = 5;
+
+      // Reset the page each time the animation begins 
+      loader.textContent = "Loading...";
+      status.textContent = "Please wait";
+      progress.textContent = "Progress: 0%";
+      document.body.style.backgroundColor = backgroundColors[0];
+
+      // If an interval is already running, clear it to prevent multiple loops.
+      clearInterval(activeInterval);
+
+      /*
+        setInterval() creates asynchronous looping behavior.
+
+        The browser runs this callback function every 500 milliseconds,
+        and the rest of the webpage remains usable.
+      */
+      activeInterval = setInterval(() => {
+        /*
+          The remainder operator (%) keeps the frame position within the
+          length of the frames array. 
+        */
+        const framePosition = index % frames.length;
+
+        // textContent updates the visible contents of the loader element.
+        loader.textContent = frames[framePosition];
+
+        // Change the page background to match the current animation frame.
+        document.body.style.backgroundColor =
+          backgroundColors[framePosition];
+
+        // Displays the next frame.
+        index++;
+
+        /*
+          When index is divisible by frames.length, one 
+          animation cycle has finished.
+        */
+        if (index % frames.length === 0) {
+          cycleCount++;
+        }
+
+        // Calculate the animation's progress as a percentage.
+        const percentage = Math.min(
+          Math.round((cycleCount / maxCycles) * 100),
+          100
+        );
+
+        // Update the DOM to show the progress percentage.
+        progress.textContent = `Progress: ${percentage}%`;
+
+        /*
+          clearInterval() stops setInterval() after the cycles has reached. 
+          Otherwise, the loop would continue.
+        */
+        if (cycleCount >= maxCycles) {
+          clearInterval(activeInterval);
+
+          loader.textContent = "✅";
+          status.textContent = "Done!";
+          progress.textContent = "Progress: 100%";
+          document.body.style.backgroundColor = "#d4edda";
+        }
+      }, 500);
+    }
+
+    // Store the restart button so JavaScript can respond when it's clicked.
+    const restartButton = document.getElementById("restartButton");
+
+    // The click event calls runLoadingAnimation() and starts the loop again.
+    restartButton.addEventListener("click", runLoadingAnimation);
+
+    /*
+      Creative idea: Music or a short sound effect could play while the
+      animation runs and stop when the loading process reaches 100%.
+    */
+
+    // Start the animation automatically
+    runLoadingAnimation();
+  </script>
 
 </body>
 </html>
