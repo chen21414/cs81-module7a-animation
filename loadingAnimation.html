@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+
+  <!-- Makes the page display correctly on cell phones -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Loading Animation Simulator</title>
+
+  <style>
+    body {
+      font-family: monospace;
+      text-align: center;
+      padding-top: 100px;
+      background-color: #f4f4f4;
+
+      /* Creates a smooth transition when background color changes. */
+      transition: background-color 0.5s;
+    }
+
+    #loader {
+      font-size: 2rem;
+      margin-bottom: 20px;
+    }
+
+    #status {
+      margin-bottom: 10px;
+    }
+
+    #progress {
+      margin-bottom: 20px;
+      font-weight: bold;
+    }
+
+    button {
+      padding: 10px 18px;
+      font-family: monospace;
+      cursor: pointer;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- JavaScript will change this element to display the animations refer by "loader" -->
+  <div id="loader">Loading...</div>
+
+  <!-- JavaScript will update this message when the animations finish refer by status -->
+  <div id="status">Please wait</div>
+
+  <!-- Displays the animation's completion percentage refer by progress -->
+  <div id="progress">Progress: 0%</div>
+
+  <!-- Clicking this button runs the animation again, refer by restartButton -->
+  <button id="restartButton">Restart Animation</button>
+
+
+</body>
+</html>
